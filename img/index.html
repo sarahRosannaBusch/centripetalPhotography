@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <title> Centripetal Photography </title>
+  <meta charset='UTF-8'> <!-- 16-bit Unicode -->
+  <meta name='author' content='Sarah Rosanna Busch'>
+  <meta name='description' content='Photography by Chris Perrier'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <link rel='stylesheet' href='styles.css'>
+  <link rel='icon shortcut' href='icon.png'>
+</head>
+<body>
+
+  <header onclick='nav("page0")'>
+    <h1> Centripetal </h1>
+    <img alt="cpLogo" src="logo.png">
+    <h1> Photography </h1>
+  </header>
+
+  <main id='home'>
+    <figure class='cat' onclick='nav("page1")'>
+      <img alt='category 1' src='https://lh3.googleusercontent.com/1MMUWcOoVQ9tbPRU6MUoe_-2NR4V7sEfB94XWDgyRylMSxvyAm-ckg' />
+      <figcaption class='cat'> symbiosis </figcaption>
+    </figure>
+    <figure class='cat' onclick='nav("page2")'>
+      <img alt='category 2' src='https://lh3.googleusercontent.com/z5ZEhdHBae8wGC2CCO6j27pO99KVIvpVHTyhpqx3TyDidROz4ZYaGQ' />
+      <figcaption class='cat'> muse </figcaption>
+    </figure>
+    <figure class='cat' onclick='nav("page3")'>
+      <img alt='category 3' src='https://lh4.googleusercontent.com/7wvBXvfglfC9ZUTwRwbsqJwrqHzeXjJbX6fSwMguz_u1TMcIqGSJJA' />
+      <figcaption class='cat'> odyssey </figcaption>
+    </figure>
+    <figure class='cat' onclick='nav("page4")'>
+      <img alt='category 4' src='https://lh3.googleusercontent.com/nsKZUxHslc872eTlKOevAIaSCWoQAi7YMe8pJKGZdDF_qZNRGFgd8Q' />
+      <figcaption class='cat'> commune </figcaption>
+    </figure>
+  </main> <!-- end of main#home -->
+
+  <main id='gallery' style='display:none'>
+    <button id='left' class='arrow' onclick='slide("left")'> < </button>
+    <div id='photos'></div>
+    <button id='right' class='arrow' onclick='slide("right")'> > </button>
+  </main>
+
+  <main id="about" style='display:none'>
+    <figure class='gallery'>
+      <img alt='dingo' src='Capture.PNG'/>
+    </figure>
+    <p>
+      blah blah blah
+    </p>
+  </main>
+
+  <div id='fullscreen' style="display:none">
+    <img id='fullPhoto' alt='temp' src='logo.png' />
+    <div id='fullNav'>
+      <button id='prev' onclick='fullNav("prev")'> << PREV </button>
+      <button id='exit' onclick='fullNav("exit")'> BACK TO GALLERY </button>
+      <button id='next' onclick='fullNav("next")'> NEXT >> </button>
+    </div>
+  </div>
+
+  <footer>
+      <nav>
+        <button id='home' onclick='nav("home")'> HOME </button>
+        <button id='cat1' onclick='nav("page1")'> symbiosis </button>
+        <button id='cat2' onclick='nav("page2")'> muse </button>
+        <button id='cat3' onclick='nav("page3")'> odyssey </button>
+        <button id='cat4' onclick='nav("page4")'> commune </button>
+        <button id='about' onclick='nav("about")'> ABOUT </button>
+      </nav>
+  </footer>
+
+  <script src='scripts.js'></script>
+  <script src='json.js'></script>
+</body>
+</html>
