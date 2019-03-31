@@ -1,15 +1,15 @@
 <!doctype html>
-<html>
+<html lang='en'>
 <head>
+  <meta charset='UTF-8'>
   <title> Centripetal Photography </title>
-  <meta charset='UTF-8'> <!-- 16-bit Unicode -->
   <meta name='author' content='Sarah Rosanna Busch'>
   <meta name='description' content='Photography by Chris Perrier'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
   <link rel='stylesheet' href='styles.css'>
   <link rel='icon shortcut' href='img/icon.png'>
 </head>
-<body>
+<body onload='nav("home")'>
 
   <main id='home'>
     <header>
@@ -19,20 +19,20 @@
         <img alt="Photography" src="img/photography.png" />
       </h1>
     </header>
-    <figure class='cat' onclick='nav("page1")'>
-      <img alt='category 1' src='https://lh3.googleusercontent.com/1MMUWcOoVQ9tbPRU6MUoe_-2NR4V7sEfB94XWDgyRylMSxvyAm-ckg' />
+    <figure class='cat' onclick='nav("symbiosis")'>
+      <img id='home_symbiosisImg' alt='symbiosis' src='' />
       <figcaption class='cat'> symbiosis </figcaption>
     </figure>
-    <figure class='cat' onclick='nav("page2")'>
-      <img alt='category 2' src='https://lh3.googleusercontent.com/z5ZEhdHBae8wGC2CCO6j27pO99KVIvpVHTyhpqx3TyDidROz4ZYaGQ' />
+    <figure class='cat' onclick='nav("muse")'>
+      <img id='home_museImg' alt='muse' src='' />
       <figcaption class='cat'> muse </figcaption>
     </figure>
-    <figure class='cat' onclick='nav("page3")'>
-      <img alt='category 3' src='https://lh4.googleusercontent.com/7wvBXvfglfC9ZUTwRwbsqJwrqHzeXjJbX6fSwMguz_u1TMcIqGSJJA' />
+    <figure class='cat' onclick='nav("odyssey")'>
+      <img id='home_odysseyImg' alt='odyssey' src='' />
       <figcaption class='cat bottom'> odyssey </figcaption>
     </figure>
-    <figure class='cat' onclick='nav("page4")'>
-      <img alt='category 4' src='https://lh3.googleusercontent.com/nsKZUxHslc872eTlKOevAIaSCWoQAi7YMe8pJKGZdDF_qZNRGFgd8Q' />
+    <figure class='cat' onclick='nav("commune")'>
+      <img id='home_communeImg' alt='commune' src='' />
       <figcaption class='cat bottom'> commune </figcaption>
     </figure>
   </main> <!-- end of main#home -->
@@ -52,18 +52,18 @@
     </p>
   </main>
 
-  <div id='fullscreen' style="display:none" onclick='fullNav("exit")'>
+  <main id='fullscreen' style="display:none" onclick='fullNav("exit")'>
     <img id='fullPhoto' alt='temp' src='img/logo.png' />
-  </div>
+  </main>
 
   <footer>
     <nav>
-      <button id='homeBtn' onclick='nav("home")' class='curPage'> HOME </button>
-      <button id='page1Btn' onclick='nav("page1")'> symbiosis </button>
-      <button id='page2Btn' onclick='nav("page2")'> muse </button>
-      <button id='page3Btn' onclick='nav("page3")'> odyssey </button>
-      <button id='page4Btn' onclick='nav("page4")'> commune </button>
-      <button id='aboutBtn' onclick='nav("about")'> ABOUT </button>
+      <button id='home_menuBtn' onclick='nav("home")' class='curPage'> HOME </button>
+      <button id='symbiosis_menuBtn' onclick='nav("symbiosis")'> symbiosis </button>
+      <button id='muse_menuBtn' onclick='nav("muse")'> muse </button>
+      <button id='odyssey_menuBtn' onclick='nav("odyssey")'> odyssey </button>
+      <button id='commune_menuBtn' onclick='nav("commune")'> commune </button>
+      <button id='about_menuBtn' onclick='nav("about")'> ABOUT </button>
     </nav>
     <div id='fullNav'>
       <button id='prev' onclick='fullNav("prev")'> << PREV </button>
@@ -73,6 +73,6 @@
   </footer>
 
   <script src='scripts.js'></script>
-  <script src='json.js'></script>
+  <script src='photos.js'></script>
 </body>
 </html>

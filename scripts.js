@@ -1,12 +1,10 @@
 var _curPage = "home";
 var _prevPage = "";
 var _clicked; //img.id of _clicked thumbnail
-var _pics = []; //copy of current gallery (from json.js)
 var _firstImgIdx = 0; //first of those displayed on the screen
-var _imgElem; //meta data for html
 var _picsPerPage = 6;
 
-/* brief: response to onclick events for navigation background
+/* brief: click event handler
  * params: page - string specifying <main>'s id             */
 function nav(page)
 {
@@ -16,25 +14,25 @@ function nav(page)
   hideAll(); //hide all <main>s
   showFull(false); //hide fullscreen popup
 
-  document.getElementById(_prevPage + "Btn").classList = "";
-  document.getElementById(_curPage + "Btn").classList = "curPage";
+  document.getElementById(_prevPage + "_menuBtn").classList = "";
+  document.getElementById(_curPage + "_menuBtn").classList = "curPage";
 
   switch(page)
   {
     case 'home':
+      document.getElementById('home_symbiosisImg').src = 'photos/symbiosis/' + PHOTOS.symbiosis[0];
+      document.getElementById('home_museImg').src = 'photos/muse/' + PHOTOS.muse[0];
+      document.getElementById('home_odysseyImg').src = 'photos/odyssey/' + PHOTOS.odyssey[0];
+      document.getElementById('home_communeImg').src = 'photos/commune/' + PHOTOS.commune[0];
+      document.getElementsByTagName('nav')[0].style.display = "none";
     case 'about':
       document.getElementById(page).style.display = 'block';
     break;
 
-    case 'page1': case 'page2': case 'page3': case 'page4':
-      switch(page)
-      {
-        case 'page1': _pics = cat1; break;
-        case 'page2': _pics = cat2; break;
-        case 'page3': _pics = cat3; break;
-        case 'page4': _pics = cat4; break;
-        default: console.log(page + " not found"); break;
-      }
+    case 'commune': 
+    case 'muse': 
+    case 'odyssey': 
+    case 'symbiosis':
       document.getElementById('gallery').style.display = 'block';
       loadGallery();
     break;
@@ -53,32 +51,33 @@ function loadGallery()
   //remove any imgs currently being displayed
   if(galleryDiv.hasChildNodes)
   {
-    var nodes = galleryDiv.childNodes.length - 1;
-    for(var i = nodes; i >= 0; i--)
+    var g = galleryDiv.childNodes.length - 1;
+    for( ; g >= 0; g--)
     {
-      galleryDiv.removeChild(galleryDiv.childNodes[i]);
+      galleryDiv.removeChild(galleryDiv.childNodes[g]);
     }
   }
 
   //display requested set of images
   var i = _firstImgIdx;
+  var len = PHOTOS[_curPage].length;
   do
   {
     var fig = document.createElement('figure');
     fig.className = 'gallery';
     galleryDiv.appendChild(fig);
-    _imgElem = document.createElement('img');
-    fig.appendChild(_imgElem);
-    _imgElem.id = i;
-    _imgElem.alt = _curPage + ' pic' + i;
-    _imgElem.src = _pics[i].src;
-    _imgElem.onclick = function()
+    var img = document.createElement('img');
+    fig.appendChild(img);
+    img.id = i;
+    img.alt = _curPage + ' pic' + i;
+    img.src = 'photos/' + _curPage + '/' + PHOTOS[_curPage][i];
+    img.onclick = function()
     {
       _clicked = this.id;
       showFull(true);
     }
     i++;
-  } while(i < _firstImgIdx+_picsPerPage && i < _pics.length);
+  } while(i < _firstImgIdx+_picsPerPage && i < len);
 
   //only show nav arrows if they're relevant
   if(_firstImgIdx === 0)
@@ -90,7 +89,7 @@ function loadGallery()
     document.getElementById('left').style.display = 'block';
   }
 
-  if(_firstImgIdx >= _pics.length-_picsPerPage)
+  if(_firstImgIdx >= len-_picsPerPage)
   {
     document.getElementById('right').style.display = 'none';
   }
@@ -112,7 +111,7 @@ function slide(direction)
     break;
 
     case 'right':
-      var lastIdx = _pics.length - _picsPerPage;
+      var lastIdx = PHOTOS[_curPage].length - _picsPerPage;
       _firstImgIdx += _picsPerPage;
       if(_firstImgIdx > lastIdx) _firstImgIdx = lastIdx; //will display max pics possible
       if(_firstImgIdx < 0) _firstImgIdx = 0;
@@ -137,7 +136,7 @@ function showFull(show)
     var curPicIdx = parseInt(_clicked);
     var fullImage = document.getElementById('fullPhoto');
     fullImage.alt = _curPage + ' pic' + curPicIdx;
-    fullImage.src = _pics[curPicIdx].src;
+    fullImage.src = 'photos/' + _curPage + '/' +PHOTOS[_curPage][curPicIdx];
     document.getElementsByTagName('nav')[0].style.display = "none";
     document.getElementById('fullNav').style.display = "block";
   }
@@ -161,7 +160,7 @@ function fullNav(dir)
   {
     case 'prev':
       _clicked--;
-      if(_clicked < 0)
+      if(_clicked <= 0)
       {
         _clicked = 0;
         prevBtn.style.display = 'none';
@@ -170,9 +169,10 @@ function fullNav(dir)
       break;
     case 'next':
       _clicked++;
-      if(_clicked >= _pics.length)
+      lastIdx = PHOTOS[_curPage].length - 1;
+      if(_clicked >= lastIdx)
       {
-        _clicked = _pics.length - 1;
+        _clicked = lastIdx;
         nextBtn.style.display = 'none';
       }
       showFull(true);
