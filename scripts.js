@@ -1,194 +1,160 @@
-var _curPage = "home";
-var _prevPage = "";
-var _clicked; //img.id of _clicked thumbnail
-var _pics = []; //copy of current gallery (from json.js)
-var _firstImgIdx = 0; //first of those displayed on the screen
-var _imgElem; //meta data for html
-var _picsPerPage = 6;
+'use strict';
 
-/* brief: response to onclick events for navigation background
- * params: page - string specifying <main>'s id             */
-function nav(page)
-{
-  _prevPage = _curPage;
-  _curPage = page;
-  _firstImgIdx = 0; //reset whenever naving to new page
-  hideAll(); //hide all <main>s
-  showFull(false); //hide fullscreen popup
+/*****************************************************
+ * project:     Centripetal Photography
+ * author:      Sarah Rosanna Busch
+ * description: Displays Chris Perrier's photography
+******************************************************/
 
-  document.getElementById(_prevPage + "Btn").classList = "";
-  document.getElementById(_curPage + "Btn").classList = "curPage";
+var main = (function() {
+    var that = {}; //public objects
+    var elem = {}; //dom references
+    var vars = {
+        curPage: 'home',
+        clicked: '', //img.id of _clicked thumbnail
+        firstImgIdx: 0, //first to display in gallery
+        picsPerPage: 6, //num photos to display in gallery
+        zindex: 20
+    }; //static variables
 
-  switch(page)
-  {
-    case 'home':
-    case 'about':
-      document.getElementById(page).style.display = 'block';
-    break;
+    // brief: called from <body>'s onload event
+    that.init = function() {
+        console.log('initializing...')
 
-    case 'page1': case 'page2': case 'page3': case 'page4':
-      switch(page)
-      {
-        case 'page1': _pics = cat1; break;
-        case 'page2': _pics = cat2; break;
-        case 'page3': _pics = cat3; break;
-        case 'page4': _pics = cat4; break;
-        default: console.log(page + " not found"); break;
-      }
-      document.getElementById('gallery').style.display = 'block';
-      loadGallery();
-    break;
+        elem.body = SB.html.getElem('body');
+        elem.menuIcon = SB.html.getElem('#menuIcon');
+        elem.menu = SB.html.getElem('nav');
+        createMenu();
+        elem.menuBtns = SB.html.getElems('button', elem.menu);
+        elem.overlay = SB.html.getElem('#overlay');
 
-    default:
-      console.log(page + " not found");
-    break;
-  }
-}
+        elem.homeView = SB.html.getElem('#homeView');
+        elem.galleryView = SB.html.getElem('#galleryView');
+        elem.photoView = SB.html.getElem('#photoView');
+        
+        elem.galleryPhotos = SB.html.getElem('#galleryPhotos');
+        elem.left = SB.html.getElem('#left');
+        elem.right = SB.html.getElem('#right');
 
-/* brief: loads "thumbnail" images into <main> */
-function loadGallery()
-{
-  var galleryDiv = document.getElementById('photos');
-
-  //remove any imgs currently being displayed
-  if(galleryDiv.hasChildNodes)
-  {
-    var nodes = galleryDiv.childNodes.length - 1;
-    for(var i = nodes; i >= 0; i--)
-    {
-      galleryDiv.removeChild(galleryDiv.childNodes[i]);
+        createHomePage();
+        that.nav("home");
     }
-  }
 
-  //display requested set of images
-  var i = _firstImgIdx;
-  do
-  {
-    var fig = document.createElement('figure');
-    fig.className = 'gallery';
-    galleryDiv.appendChild(fig);
-    _imgElem = document.createElement('img');
-    fig.appendChild(_imgElem);
-    _imgElem.id = i;
-    _imgElem.alt = _curPage + ' pic' + i;
-    _imgElem.src = _pics[i].src;
-    _imgElem.onclick = function()
-    {
-      _clicked = this.id;
-      showFull(true);
+    // brief: menuIcon click event handler
+    // param: <bool> true to open, false to close
+    that.openMenu = function(open) {
+        console.log('showing menu: ' + open);
+        var displayType = open ? 'none' : 'block';
+        elem.menuIcon.style.display = displayType;
+        displayType = open ? 'block' : 'none';
+        elem.menu.style.display = displayType;
+        elem.overlay.style.display = displayType;
     }
-    i++;
-  } while(i < _firstImgIdx+_picsPerPage && i < _pics.length);
 
-  //only show nav arrows if they're relevant
-  if(_firstImgIdx === 0)
-  {
-    document.getElementById('left').style.display = 'none';
-  }
-  else
-  {
-    document.getElementById('left').style.display = 'block';
-  }
+    // brief: menu button click event handler
+    // param: '' = id of <main> to display
+    that.nav = function(page) { 
+        console.log('loading ' + page + ' view');
+        that.openMenu(false);
+        that.showFull(false);
+        vars.zindex = 20;
+        vars.curPage = page;
+        switch(page) {
+            case 'home':
+                elem.homeView.style.display = "block";
+                elem.galleryView.style.display = "none";
+                break;
+            default:
+                elem.homeView.style.display = "none";
+                elem.galleryView.style.display = "block";
+                loadGallery(page);
+                break;
+        }
+    }    
 
-  if(_firstImgIdx >= _pics.length-_picsPerPage)
-  {
-    document.getElementById('right').style.display = 'none';
-  }
-  else
-  {
-    document.getElementById('right').style.display = 'block';
-  }
-}
+    // brief: populate menu
+    function createMenu() {
+        console.log('creating menu')
+        for(var key in PHOTOS) {
+            var btn = SB.html.spawn(elem.menu, 'button', key);
+            btn.innerText = key;
+            btn.onclick = function() {
+                that.nav(this.id);
+            }
+        }
+    }
 
-/* brief: loads the next set of "thumbnails"
- * params: direction - string indicating inc/decrement pic index */
-function slide(direction)
-{
-  switch(direction)
-  {
-    case 'left':
-      _firstImgIdx -= _picsPerPage;
-      if(_firstImgIdx < 0) _firstImgIdx = 0;
-    break;
+    function createHomePage() {
+        console.log('creating home page');
+        for(var key in PHOTOS) {
+            var fig = SB.html.spawn(elem.homeView, 'figure');
+            fig.id = key;
+            fig.className = 'cat';
+            fig.onclick = function() {
+                that.nav(this.id);
+            }
+            var img = SB.html.spawn(fig, 'img');
+            img.src = 'photos/' + key + '/' + PHOTOS[key][0]; //use first in list for cover
+            var caption = SB.html.spawn(fig, 'figcaption');
+            caption.className = 'cat';
+            caption.innerText = key;
+        }
+    }
 
-    case 'right':
-      var lastIdx = _pics.length - _picsPerPage;
-      _firstImgIdx += _picsPerPage;
-      if(_firstImgIdx > lastIdx) _firstImgIdx = lastIdx; //will display max pics possible
-      if(_firstImgIdx < 0) _firstImgIdx = 0;
-    break;
+    /* brief: loads "thumbnail" images into <main> when in gallery mode*/
+    function loadGallery()
+    {
+        console.log('loading ' + vars.curPage + ' gallery');
+        SB.html.empty(elem.galleryPhotos);
 
-    default:
-      console.log(direction + " is not a valid slide direction");
-    break;
-  }
-  loadGallery();
-}
+        //display requested set of images
+        var i = vars.firstImgIdx;
+        var len = PHOTOS[vars.curPage].length;
+        for(var i = 0; i < len; i++) {
+            var fig = SB.html.spawn(elem.galleryPhotos, 'figure');
+            fig.className = 'gallery';
 
-/* brief: "thumbnail" onclick event; loads the pic selected in fullscreen mode
- * params: show - boolean to toggle fullscreen mode                         */
-function showFull(show)
-{
-  var popupDiv = document.getElementById('fullscreen');
+            fig.style.transform = "rotate(" + getRandomNumber() + "deg)";
+            fig.onmouseover = function() {
+                this.style.transform = "rotate(0deg)";
+                this.style.zIndex = vars.zindex;
+                vars.zindex++;
+            }
+            fig.onmouseout = function() {
+                this.style.transform = "rotate(" + getRandomNumber() + "deg)";
+            }
 
-  if(show)
-  {
-    popupDiv.style.display = 'block';
-    var curPicIdx = parseInt(_clicked);
-    var fullImage = document.getElementById('fullPhoto');
-    fullImage.alt = _curPage + ' pic' + curPicIdx;
-    fullImage.src = _pics[curPicIdx].src;
-    document.getElementsByTagName('nav')[0].style.display = "none";
-    document.getElementById('fullNav').style.display = "block";
-  }
-  else
-  {
-    popupDiv.style.display = 'none';
-    document.getElementsByTagName('nav')[0].style.display = "block";
-    document.getElementById('fullNav').style.display = "none";
-  }
-}
+            var img = SB.html.spawn(fig, 'img', i);
+            img.src = 'photos/' + vars.curPage + '/' + PHOTOS[vars.curPage][i];
+            img.onclick = function() {
+                vars.clicked = this.id;
+                that.showFull(true);
+            }
+        }
+    }
 
-/* brief: onclick handler for fullscreen nav buttons
- * params: dir - string cmd to inc/decrement pic idx */
-function fullNav(dir)
-{
-  var prevBtn = document.getElementById('prev');
-  var nextBtn = document.getElementById('next');
-  nextBtn.style.display = 'inline-block';
-  prevBtn.style.display = 'inline-block';
-  switch(dir)
-  {
-    case 'prev':
-      _clicked--;
-      if(_clicked < 0)
-      {
-        _clicked = 0;
-        prevBtn.style.display = 'none';
-      }
-      showFull(true);
-      break;
-    case 'next':
-      _clicked++;
-      if(_clicked >= _pics.length)
-      {
-        _clicked = _pics.length - 1;
-        nextBtn.style.display = 'none';
-      }
-      showFull(true);
-      break;
-    case 'exit':
-      showFull(false);
-      break;
-    default: break;
-  }
-}
+    function getRandomNumber(){
+        var posNeg = (Math.random() > 0.5) ? 1 : -1;
+        var x = Math.random() * 75 * posNeg;
+        return x;
+    }
 
-function hideAll()
-{
-  var pages = document.querySelectorAll('main');
-  for(var i=0; i < pages.length; i++)
-  {
-    pages[i].style.display = 'none';
-  }
-}
+    /* brief: "thumbnail" onclick event; loads the pic selected in fullscreen mode
+    * params: show - boolean to toggle fullscreen mode                         */
+    that.showFull = function(show) {
+        console.log('showing fullscreen photo ' + show);
+        if(show) {
+            elem.photoView.style.display = 'block';
+            var curPicIdx = parseInt(vars.clicked);
+            var fullImage = document.getElementById('fullPhoto');
+            fullImage.src = 'photos/' + vars.curPage + '/' +PHOTOS[vars.curPage][curPicIdx];
+            elem.photoView.style.display = "block";
+            elem.body.style.overflowY = 'hidden';
+        } else {
+            elem.photoView.style.display = 'none';
+            elem.body.style.overflowY = 'auto';
+        }
+    }
+
+    return that;
+}());

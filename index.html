@@ -1,78 +1,61 @@
 <!doctype html>
-<html>
+<html lang='en'>
+
 <head>
-  <title> Centripetal Photography </title>
-  <meta charset='UTF-8'> <!-- 16-bit Unicode -->
-  <meta name='author' content='Sarah Rosanna Busch'>
-  <meta name='description' content='Photography by Chris Perrier'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <link rel='stylesheet' href='styles.css'>
-  <link rel='icon shortcut' href='img/icon.png'>
+    <meta charset='UTF-8'>
+    <title> Centripetal Photography </title>
+    <meta name='author' content='Sarah Rosanna Busch'>
+    <meta name='description' content='Photography by Chris Perrier'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' href='styles.css'>
+    <link rel='icon shortcut' href='img/icon.png'>
 </head>
-<body>
 
-  <main id='home'>
-    <header>
-      <h1>
-        <img alt="Centripetal" src="img/centripetal.png" />
-        <img alt="cpLogo" src="img/cp.png" />
-        <img alt="Photography" src="img/photography.png" />
-      </h1>
-    </header>
-    <figure class='cat' onclick='nav("page1")'>
-      <img alt='category 1' src='https://lh3.googleusercontent.com/1MMUWcOoVQ9tbPRU6MUoe_-2NR4V7sEfB94XWDgyRylMSxvyAm-ckg' />
-      <figcaption class='cat'> symbiosis </figcaption>
-    </figure>
-    <figure class='cat' onclick='nav("page2")'>
-      <img alt='category 2' src='https://lh3.googleusercontent.com/z5ZEhdHBae8wGC2CCO6j27pO99KVIvpVHTyhpqx3TyDidROz4ZYaGQ' />
-      <figcaption class='cat'> muse </figcaption>
-    </figure>
-    <figure class='cat' onclick='nav("page3")'>
-      <img alt='category 3' src='https://lh4.googleusercontent.com/7wvBXvfglfC9ZUTwRwbsqJwrqHzeXjJbX6fSwMguz_u1TMcIqGSJJA' />
-      <figcaption class='cat bottom'> odyssey </figcaption>
-    </figure>
-    <figure class='cat' onclick='nav("page4")'>
-      <img alt='category 4' src='https://lh3.googleusercontent.com/nsKZUxHslc872eTlKOevAIaSCWoQAi7YMe8pJKGZdDF_qZNRGFgd8Q' />
-      <figcaption class='cat bottom'> commune </figcaption>
-    </figure>
-  </main> <!-- end of main#home -->
+<body onload='main.init()'>
 
-  <main id='gallery' style='display:none'>
-    <div id='photos'></div>
-    <button id='left' class='arrow' onclick='slide("left")'> < </button>
-    <button id='right' class='arrow' onclick='slide("right")'> > </button>
-  </main>
+    <main id='homeView'>
+        <header>
+            <h1>
+                <img alt="Centripetal Photography" src="img/header.png" />
+            </h1>
+        </header>
+        <!-- figures get inserted here -->
+    </main> <!-- end of main#home -->
 
-  <main id="about" style='display:none'>
-    <figure class='gallery'>
-      <img alt='dingo' src='img/Capture.PNG'/>
-    </figure>
-    <p class='about'>
-      blah blah blah
-    </p>
-  </main>
+    <main id='galleryView' style='display:none'>
+        <div id='galleryPhotos'>
+            <!-- thumbnail images displayed here -->
+        </div>
+    </main>
 
-  <div id='fullscreen' style="display:none" onclick='fullNav("exit")'>
-    <img id='fullPhoto' alt='temp' src='img/logo.png' />
-  </div>
+    <main id='photoView' onclick='main.showFull(false)' style="display:none">
+        <img id='fullPhoto' src='img/logo.png' />
+    </main>
 
-  <footer>
-    <nav>
-      <button id='homeBtn' onclick='nav("home")' class='curPage'> HOME </button>
-      <button id='page1Btn' onclick='nav("page1")'> symbiosis </button>
-      <button id='page2Btn' onclick='nav("page2")'> muse </button>
-      <button id='page3Btn' onclick='nav("page3")'> odyssey </button>
-      <button id='page4Btn' onclick='nav("page4")'> commune </button>
-      <button id='aboutBtn' onclick='nav("about")'> ABOUT </button>
-    </nav>
-    <div id='fullNav'>
-      <button id='prev' onclick='fullNav("prev")'> << PREV </button>
-      <button id='exit' onclick='fullNav("exit")'> BACK TO GALLERY </button>
-      <button id='next' onclick='fullNav("next")'> NEXT >> </button>
+    <main id="aboutView" style='display:none'>
+        <figure class='gallery'>
+            <img alt='dingo' src='img/Capture.PNG'/>
+        </figure>
+        <p class='about'>
+            blah blah blah
+        </p>
+    </main>
+
+    <button id='menuIcon' onclick='main.openMenu(true)'>
+        <div class='iconBar'></div>
+        <div class='iconBar'></div>
+        <div class='iconBar'></div>
+    </button>    
+    <div id='overlay' onclick='main.openMenu(false)' style='display:none'>
+        <!-- disables page behind menu when it's open -->
     </div>
-  </footer>
+    <nav class='menu' style='display:none'>
+        <button id='homeBtn' onclick='main.nav("home")' class='curPage'> home </button>
+        <!-- button for each category listed in photos.js get created here -->
+    </nav>
 
-  <script src='scripts.js'></script>
-  <script src='json.js'></script>
+    <script src='framework.js'></script>
+    <script src='scripts.js'></script>
+    <script src='photos.js'></script>
 </body>
 </html>

@@ -3,420 +3,293 @@
 * /* padding and border are included in total width and height of all elements */
 {
     box-sizing: border-box;
+    outline: none;
 }
 
 ::selection
 {
-  background: none;
+    background: none;
 }
 
 body
 {
-  background-color: black;
-  margin: 0px;
-  overflow: hidden;
+    background-color: black;
+    margin: 0px;
+    overflow-x: hidden;
 }
 
-/********************************** Header ************************************/
+/*********************************** Menu *************************************/
 
-header
+#menuIcon
 {
-  width: 100vw;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  transform: translate(0%, -50%);
-  -ms-transform: translate(0%, -50%);
-  left: 0;
-  margin: 0px;
-  padding-top: 2vh;
-  cursor: pointer;
-  z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1.5cm;
+    height: 1.5cm;
+    background: none;
+    border: none;
+    margin: 0.5cm;
+    cursor: pointer;
+    z-index: 200;
 }
 
-header img
+div.iconBar
 {
-  width: 40vw;
-  margin: 0.2vh;
-  position: relative;
-  display: inline-block;
+    width: 100%;
+    height: 15%;
+    margin-bottom: 15%;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid black;
+    cursor: pointer;
 }
 
-header img:first-child
+div#overlay
 {
-  transform: translate(0%, -50%);
-  -ms-transform: translate(0%, -50%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: none;
+    z-index: 100;
 }
 
-header img:nth-child(even)
+nav.menu
 {
-  width: 10vw;
+    z-index: 101;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10em;
+    background: none;
+    margin: 1em;
+    padding: 5px 5px 0px 5px;
 }
 
-header img:last-child
+nav.menu button
 {
-  transform: translate(0%, 50%);
-  -ms-transform: translate(0%, 50%);
-}
-
-header h1
-{
-  display: inline-block;
-  margin: 0;
-  font-size: 4vh;
-  color: grey;
+    width: 100%;
+    background: none;
+    border: none;
+    color: white;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000; 
+    font-family: monospace;
+    font-size: 20px;
+    padding: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
 }
 
 /*********************************** Main *************************************/
 
 main
 {
-  width: 100vw;
-  height: 100vh;
-  padding: 0;
-  overflow: hidden;
-  margin: 0;
-  background-image: url(img/backgroundLogo.png);
-  background-repeat: no-repeat;
-  background-size: contain;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
 }
 
 /********************************* Home Page **********************************/
 
+header
+{
+    width: 100vw;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    -ms-transform: translate(0%, -50%);
+    left: 0;
+    margin: 0px;
+    padding-top: 2vh;
+    cursor: pointer;
+    z-index: 10;
+}
+
+header img
+{
+    width: 50vw;
+    min-width: 12em;
+    margin: 0.2vh;
+    position: relative;
+    display: inline-block;
+    transform: translateY(-20%);
+    -ms-transform: translateY(-20%);
+}
+
+header h1
+{
+    display: inline-block;
+    margin: 0;
+    font-size: 4vh;
+    color: grey;
+}
+
 figure.cat
 {
-  float: left;
-  position: relative;
-  width: 50vw;
-  height: 50vh;
-  margin: 0;
-  color: white;
-  cursor: pointer;
-  text-align: left;
-  background: black;
+    float: left;
+    position: relative;
+    width: 100vw;
+    height: 25vh;
+    margin: 0;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+    background: black;
+}
+
+@media (min-aspect-ratio: 4/4) 
+{
+    figure.cat
+    {
+        width: 50vw;
+        height: 50vh;
+    }
 }
 
 figure.cat:nth-child(odd)
 {
-  text-align: right;
+    text-align: right;
 }
 
 figure.cat img
 {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  opacity: 0.4;
-  transition: 3s ease;
-  backface-visibility: hidden;
-  border: none;
+    display: inline-block;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    transition: 3s ease;
+    backface-visibility: hidden;
+    border: none;
 }
 
 figcaption.cat
 {
-  transition: 3s ease;
-  opacity: 0.8;
-  width: 100%;
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -100%);
-  -ms-transform: translate(-50%, -100%);
-  color: grey;
-  font-size: 7vw;
-  font-family: fantasy;
-  text-align: center;
-  text-shadow: 2px 2px rgba(0, 0, 0, 0.7);
+    transition: 3s ease;
+    opacity: 0.8;
+    width: 100%;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    -ms-transform: translate(-50%, -100%);
+    color: grey;
+    font-size: 7vw;
+    font-family: fantasy;
+    text-align: center;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.7);
 }
 
 figure.cat:hover img
 {
-  transition: 3s ease;
-  opacity: 1;
+    transition: 3s ease;
+    opacity: 1;
 }
 
 figure.cat:hover figcaption.cat
 {
-  transition: 3s ease;
-  opacity: 0.2;
+    transition: 3s ease;
+    opacity: 0.2;
 }
 
 /********************************* Gallery ************************************/
 
-button.arrow
+div#galleryPhotos
 {
-  height: 100vh;
-  width: 4vw;
-  background: none;
-  color: rgb(85, 121, 85);
-  font-size: 15vh;
-  font-weight: bolder;
-  font-family: cursive;
-  border: none;
-  cursor: pointer;
-  outline: none;
-}
-
-button.arrow#left
-{
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index:100;
-}
-
-button.arrow#right
-{
-  position: absolute;
-  top: 0;
-  right: 10vw;
-  z-index: 100;
-}
-
-div#photos
-{
-  width: 100vw;
-  height: 100vh;
+    width: 90vw;
+    height: 90vh;
+    margin: 5vh;
+    position: relative;
 }
 
 figure.gallery
 {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  width: 49vw;
-  margin: 0;
-  margin-right: 1vw;
-  height: 32vh;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 25vw;
+    height: 25vw;
+    margin: 1vw;
+    transition: 2s ease;
 }
 
 figure.gallery img
 {
-  transition: 2s ease;
-  position: relative;
-  max-width: 140%;
-  max-height: 140%;
-  margin-top: 50%;
-  margin-left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  box-shadow: -5px -3px 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
+    transition: 2s ease;
+    position: relative;
+    max-width: 140%;
+    max-height: 140%;
+    margin-top: 50%;
+    margin-left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    box-shadow: -5px -3px 5px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 
 figure.gallery:nth-child(odd)
 {
-  top: -2vh;
+    top: -2vh;
 }
 
 figure.gallery:hover img
 {
-  transition: 2s ease;
-  z-index: 50;
-  max-width: 160%;
-  max-height: 160%;
+    transition: 2s ease;
+    max-width: 160%;
+    max-height: 160%;
 }
 
-figure.gallery:nth-child(1):hover img
+@media (min-aspect-ratio: 4/4) /* landscape */
 {
-  margin-top: 100%;
-  margin-left: 100%;
-}
-
-figure.gallery:nth-child(2):hover img
-{
-  margin-top: 100%;
-  margin-left: 0%;
-}
-
-figure.gallery:nth-child(3):hover img
-{
-  margin-top: 50%;
-  margin-left: 100%;
-}
-
-figure.gallery:nth-child(4):hover img
-{
-  margin-top: 50%;
-  margin-left: 0%;
-}
-
-figure.gallery:nth-child(5):hover img
-{
-  margin-top: 0%;
-  margin-left: 100%;
-}
-
-figure.gallery:nth-child(6):hover img
-{
-  margin-top: 0%;
-  margin-left: 0%;
+    figure.gallery
+    {
+        width: 15vw;
+        height: 15vw;
+    }
 }
 
 /******************************** Fullscreen **********************************/
 
-div#fullscreen
+main#photoView
 {
-  z-index: 100;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  padding-top: 2vh;
-  padding-bottom: 6vh;
-  background:black;
-  text-align: center;
+    z-index: 100;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 2vh;
+    padding-bottom: 6vh;
+    background:black;
+    text-align: center;
 }
 
 img#fullPhoto
 {
-  max-width: 100%;
-  max-height: 100%;
-  padding-top: 2vh;
+    max-width: 100%;
+    max-height: 100%;
+    padding-top: 2vh;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 /*********************************** About ************************************/
 
 p.about
 {
-  color: white;
-  width: 60vw;
-  margin: 5vw;
-  text-align: right;
+    color: white;
+    width: 60vw;
+    margin: 5vw;
+    text-align: right;
 }
 
-/********************************** Footer ************************************/
 
-footer
-{
-  z-index: 1000;
-  width: 100vw;
-  height: 8vh;
-  position: absolute;
-  bottom: 0;
-  text-align: center;
-}
-
-div#fullNav
-{
-  display: none;
-  width: 100vw;
-  text-align: center;
-}
-
-footer button
-{
-  display: inline-block;
-  text-align: center;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  padding: 0.5vh;
-  font-family: monospace;
-  color: rgb(85, 121, 85);
-  font-size: 2.5vh;
-  font-weight: bold;
-  text-shadow: -1px -1px black;
-  background: rgba(255, 255, 255, 0.5); /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.3)); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.3)); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.3)); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.7)); /* Standard syntax */
-  outline: none;
-}
-
-footer button:active
-{
-  background: rgba(255, 255, 255, 0.5); /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.2)); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.2)); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.2)); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.3)); /* Standard syntax */
-}
-
-footer button.curPage
-{
-  color: black;
-  text-shadow: none;
-  background: rgba(85, 121, 85, 0.5); /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(rgba(85, 121, 85, 0.2), rgba(255, 255, 255, 0.3)); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(rgba(85, 121, 85, 0.2), rgba(255, 255, 255, 0.3)); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(rgba(85, 121, 85, 0.2), rgba(255, 255, 255, 0.3)); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(85, 121, 85, 0.7)); /* Standard syntax */
-}
-
-/******************************** Responsive **********************************/
-              /* Default styles are for portrait orientation */
-
-@media (min-aspect-ratio: 4/3) /* landscape */
-{
-  figure.gallery
-  {
-    width: 32vw;
-    height: 50vh;
-    margin: 0.5vh;
-    margin-left: 0.5vw;
-    margin-right: 0.5vw;
-  }
-
-  figure.gallery:nth-child(1):hover img
-  {
-    margin-top: 75%;
-    margin-left: 100%;
-  }
-
-  figure.gallery:nth-child(2):hover img
-  {
-    margin-top: 75%;
-    margin-left: 50%;
-  }
-
-  figure.gallery:nth-child(3):hover img
-  {
-    margin-top: 75%;
-    margin-left: 0%;
-  }
-
-  figure.gallery:nth-child(4):hover img
-  {
-    margin-top: 0%;
-    margin-left: 100%;
-  }
-
-  figure.gallery:nth-child(5):hover img
-  {
-    margin-top: 15%;
-    margin-left: 50%;
-  }
-
-  figure.gallery:nth-child(6):hover img
-  {
-    margin-top: 0%;
-    margin-left: 0%;
-  }
-
-  button.arrow#right
-  {
-    position: absolute;
-    top: 0;
-    right: 5vw;
-  }
-
-  footer button
-  {
-    font-size: 2.5vw;
-    margin-left: 0.5vw;
-    padding-left: 0.5vw;
-    padding-right: 0.5vw;
-  }
-
-}
-
-@media (min-width: 1000px)
-{
-  footer button
-  {
-    font-size: 18px;
-  }
-}
